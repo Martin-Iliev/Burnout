@@ -34,7 +34,7 @@ public class MouseLook : MonoBehaviour
 
         // Get the current angles
         // We also want to rotate the PLAYER
-        //     W means forward motion (vector3.forward) so we want to player to rotate towards where the camera is pointing to maintain that forward motion
+        //     W means forward motion (vector3.forward) so we want to transform to rotate towards where the camera is pointing to maintain that forward motion
         //     Else the character would only move forward in WORLD SPACE
         //     We dont rotate the camera on the Y axis since the BODY is being rotated on it -> else we would get double rotational values
 
