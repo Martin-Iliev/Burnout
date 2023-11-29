@@ -7,6 +7,7 @@ TagManager:
   - corridor1
   - corridor2
   - roomMain
+  - furniture
   layers:
   - Default
   - TransparentFX
