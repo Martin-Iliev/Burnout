@@ -11,10 +11,13 @@ public class TriggerController : MonoBehaviour
     [SerializeField] GameObject lightsCorridor1;
     [SerializeField] GameObject lightsCorridor2;
     [SerializeField] GameObject lightsRoomMain;
+    [SerializeField] GameObject chargingStation1;
+    [SerializeField] GameObject chargingStation2;
     private bool isInCorridor1 = true;
     private bool isInCorridor2 = false;
     private bool isInRoomMain = true;
-
+    private bool pickedUpStation = false;
+    private bool placedStation = false;
 
 
     [SerializeField] float moveSpeed = 2.0f;
@@ -76,5 +79,18 @@ public class TriggerController : MonoBehaviour
             isInRoomMain = false;
             isInCorridor2 = true;
         }
+
+        if (other.CompareTag("chargingStation1") && !pickedUpStation)
+        {
+            chargingStation1.SetActive(false);
+            pickedUpStation = true;
+        }
+        
+        if (other.CompareTag("chargingStation2") && !placedStation)
+        {
+            chargingStation2.SetActive(true);
+            placedStation = true;
+        }
+
     }
 }

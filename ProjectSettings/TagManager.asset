@@ -8,6 +8,8 @@ TagManager:
   - corridor2
   - roomMain
   - furniture
+  - chargingStation1
+  - chargingStation2
   layers:
   - Default
   - TransparentFX
