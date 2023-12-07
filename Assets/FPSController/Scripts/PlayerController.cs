@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
    
     private CharacterController character;
+    private Animator animator;
+    private SpriteRenderer sprite;
 
     [Header("Movement Speed")]
     [SerializeField] private float _MovementSpeed = 3f;
@@ -26,10 +28,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip steps;
     private AudioSource pAudioSource;
 
+    private bool lastLeft = true;
+    private bool lastRight = false;
+
     private void OnEnable()
     {
         character = GetComponent<CharacterController>();
         pAudioSource = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Start is called before the first frame update
@@ -42,6 +49,39 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.D)) {
+            lastLeft = false;
+            lastRight = true;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            lastLeft = true;
+            lastRight = false;
+        }
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            if (lastLeft)
+            {
+                sprite.flipX = true;
+                animator.Play("walk");
+            }
+            if (lastRight)
+            {
+                sprite.flipX = false;
+                animator.Play("walk");
+            }
+
+        }
+        else 
+        if (lastLeft)
+        {
+            sprite.flipX = true;
+            animator.Play("idle");
+        } else
+        {
+            sprite.flipX = false;
+            animator.Play("idle");
+        }
         // Create local variable and initialize it
         // Multiple x and z with the movementspeed
         Vector3 desiredMove = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");

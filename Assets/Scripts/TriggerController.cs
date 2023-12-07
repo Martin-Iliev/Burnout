@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TriggerController : MonoBehaviour
 {
@@ -13,9 +14,10 @@ public class TriggerController : MonoBehaviour
     [SerializeField] GameObject lightsRoomMain;
     [SerializeField] GameObject chargingStation1;
     [SerializeField] GameObject chargingStation2;
+    [SerializeField] TextMeshProUGUI eventText;
     private bool isInCorridor1 = true;
     private bool isInCorridor2 = false;
-    private bool isInRoomMain = true;
+    private bool isInRoomMain = false;
     private bool pickedUpStation = false;
     private bool placedStation = false;
 
@@ -82,15 +84,24 @@ public class TriggerController : MonoBehaviour
 
         if (other.CompareTag("chargingStation1") && !pickedUpStation)
         {
+            StartCoroutine(EventText("Picked up charging station. Bring it back to the classroom."));
             chargingStation1.SetActive(false);
             pickedUpStation = true;
         }
         
         if (other.CompareTag("chargingStation2") && !placedStation)
         {
+            StartCoroutine(EventText("Placed charging station. (+500 score)"));
             chargingStation2.SetActive(true);
             placedStation = true;
+            GetComponent<ExplorationController>().score += 500;
         }
 
+    }
+    public IEnumerator EventText(string displayText)
+    {
+        eventText.text = displayText;
+        yield return new WaitForSeconds(4);
+        eventText.text = "";
     }
 }
